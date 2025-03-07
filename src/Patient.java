@@ -3,7 +3,7 @@ import java.io.Serializable;
 public class Patient implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // TODO: Add relevant health attributes (age, weight, height, BMI, diet, etc.)
+    // TODO: Add relevant health attributes (the ones in the csv)
     private int age;
     private double weight;
     private double height;
