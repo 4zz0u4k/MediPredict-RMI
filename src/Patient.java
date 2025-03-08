@@ -3,7 +3,6 @@ import java.io.Serializable;
 public class Patient implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    // Attributs correspondant aux colonnes du CSV
     private String gender;
     private double age;
     private double height;
@@ -22,11 +21,9 @@ public class Patient implements Serializable {
     private String mtrans; // Transportation used (Public_Transportation, etc.)
     private String nObeyesdad; // Obesity level (Normal_Weight, Overweight, etc.)
 
-    // Constructeur par défaut
     public Patient() {
     }
 
-    // Constructeur complet pour initialiser tous les champs
     public Patient(String gender, double age, double height, double weight, boolean familyHistoryWithOverweight,
                    boolean favc, double fcvc, double ncp, String caec, boolean smoke, double ch2o, boolean scc,
                    double faf, double tue, String calc, String mtrans, String nObeyesdad) {

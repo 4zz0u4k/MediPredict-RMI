@@ -9,7 +9,7 @@ public class DatasetLoader {
     /**
      * Charge les données d'entraînement à partir d'un fichier CSV
      * 
-     * @param filePath Chemin du fichier contenant les données d'entraînement
+     * @param filePath 
      * @return Liste d'objets Patient
      */
     public static List<Patient> loadTrainingData(String filePath) {
@@ -63,9 +63,7 @@ public class DatasetLoader {
         return patients;
     }
     
-    /**
-     * Vérifie que les en-têtes correspondent à ceux attendus
-     */
+
     private static void validateHeaders(String[] expectedHeaders, String[] actualHeaders) {
         if (actualHeaders.length != expectedHeaders.length) {
             throw new IllegalArgumentException("Le nombre de colonnes dans le fichier ne correspond pas au format attendu");
@@ -80,13 +78,6 @@ public class DatasetLoader {
     }
     
     /**
-     * Crée un objet Patient à partir des valeurs d'une ligne CSV
-     * Format attendu:
-     * Gender,Age,Height,Weight,family_history_with_overweight,FAVC,FCVC,NCP,CAEC,SMOKE,CH2O,SCC,FAF,TUE,CALC,MTRANS,NObeyesdad
-     * 
-     * Exemple:
-     * Female,21,1.62,64,yes,no,2,3,Sometimes,no,2,no,0,1,no,Public_Transportation,Normal_Weight
-     * 
      * @param values Les valeurs d'une ligne
      * @return Un objet Patient
      */
@@ -94,7 +85,7 @@ public class DatasetLoader {
         Patient patient = new Patient();
         
         try {
-            // Selon l'ordre défini dans l'en-tête
+
             patient.setGender(values[0].trim());
             patient.setAge(Double.parseDouble(values[1].trim()));
             patient.setHeight(Double.parseDouble(values[2].trim()));

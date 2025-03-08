@@ -3,13 +3,10 @@ import java.util.List;
 public class TestDatasetLoader {
     public static void main(String[] args) {
         try {
-            // Chemin vers votre fichier CSV
             String filePath = "ObesityDataSet_raw_and_data_sinthetic.csv";
             
-            // Chargement des données
             List<Patient> patients = DatasetLoader.loadTrainingData(filePath);
             
-            // Affichage des premières entrées pour vérification
             System.out.println("Nombre total de patients: " + patients.size());
             System.out.println("\nAperçu des 5 premières entrées:");
             
