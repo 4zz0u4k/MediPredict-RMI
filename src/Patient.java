@@ -46,6 +46,25 @@ public class Patient implements Serializable {
         this.nObeyesdad = nObeyesdad;
     }
 
+    public Patient(Patient patient) {
+        this.gender = patient.gender;
+        this.age = patient.age;
+        this.height = patient.height;
+        this.weight = patient.weight;
+        this.familyHistoryWithOverweight = patient.familyHistoryWithOverweight;
+        this.favc = patient.favc;
+        this.fcvc = patient.fcvc;
+        this.ncp = patient.ncp;
+        this.caec = patient.caec;
+        this.smoke = patient.smoke;
+        this.ch2o = patient.ch2o;
+        this.scc = patient.scc;
+        this.faf = patient.faf;
+        this.tue = patient.tue;
+        this.calc = patient.calc;
+        this.mtrans = patient.mtrans;
+    }
+
     // Getters et Setters
     public String getGender() {
         return gender;
