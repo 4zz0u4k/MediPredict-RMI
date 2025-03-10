@@ -16,7 +16,9 @@ public class HospitalClient {
             System.out.print("Enter Hospital ID: ");
             int hospital_id = scanner.nextInt();
             scanner.nextLine(); // Consume newline
-            String filePath = "hospital_data.csv";
+
+
+            String datasetsPath = "Data/Datasets/";
             boolean running = true;
 
             while (running) {
@@ -32,7 +34,7 @@ public class HospitalClient {
                 switch (choice) {
                     case 1:
 
-                        String hospitalAnnotatedDataset = filePath + "_" + hospital_id + ".csv";
+                        String hospitalAnnotatedDataset = datasetsPath + "hospital_" + hospital_id + "dataset_.csv";
                         List<Patient> patients = DatasetLoader.loadTrainingData(hospitalAnnotatedDataset);
                         service.sendPatientData(patients);
                         System.out.println("✅ Sent " + patients.size() + " patient records to Medical Center.");
