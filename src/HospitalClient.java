@@ -36,14 +36,32 @@ public class HospitalClient {
                 switch (choice) {
                     case 1:
 
-                        String hospitalAnnotatedDataset = datasetsPath + "hospital_" + hospital_id + "dataset_.csv";
+                        String hospitalAnnotatedDataset = datasetsPath + "hospital_" + hospital_id + "_test_dataset_.csv";
                         List<Patient> patients = DatasetLoader.loadTrainingData(hospitalAnnotatedDataset);
                         service.sendPatientData(patients);
                         System.out.println("✅ Sent " + patients.size() + " patient records to Medical Center.");
                         break;
 
                     case 2:
-                        // TODO : Run Some test cases
+                        String hospitalTestDataset = datasetsPath + "hospital_" + hospital_id + "_test_dataset_.csv";
+                        List<Patient> testPatients = DatasetLoader.loadTrainingData(hospitalTestDataset);
+                        int correctPredictions = 0;
+                        int totalPredictions = testPatients.size();
+
+                        for (Patient testPatient : testPatients) {
+                            Patient patient = new Patient(testPatient);
+                            String predictedValue = service.predictObesity(patient);
+                            String realValue = testPatient.getNObeyesdad();
+
+                            if (predictedValue.equals(realValue)) {
+                                correctPredictions++;
+                            }
+                        }
+                        double accuracy = (double) correctPredictions / totalPredictions * 100;
+
+                        System.out.println("Total Predictions: " + totalPredictions);
+                        System.out.println("Correct Predictions: " + correctPredictions);
+                        System.out.println("Accuracy: " + accuracy + "%");
 
                     case 3:
                         System.out.println("Exiting... Thank you!");
