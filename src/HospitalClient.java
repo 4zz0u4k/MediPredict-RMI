@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class HospitalClient {
     public static void main(String[] args) {
+        String datasetsPath = "Data/Datasets/";
+
+
         try {
             // Connect to RMI registry
             Registry registry = LocateRegistry.getRegistry("localhost", 7777);
@@ -18,7 +21,6 @@ public class HospitalClient {
             scanner.nextLine(); // Consume newline
 
 
-            String datasetsPath = "Data/Datasets/";
             boolean running = true;
 
             while (running) {
