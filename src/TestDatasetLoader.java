@@ -3,30 +3,24 @@ import java.util.List;
 public class TestDatasetLoader {
     public static void main(String[] args) {
         try {
-            String filePath = "ObesityDataSet_raw_and_data_sinthetic.csv";
-            
+            String filePath = "../data/processed/dataset.csv";
+            int numEntriesToShow = 3; // Change this to show more or fewer entries
+
             List<Patient> patients = DatasetLoader.loadTrainingData(filePath);
             
-            System.out.println("Nombre total de patients: " + patients.size());
-            System.out.println("\nAperçu des 5 premières entrées:");
-            
+            System.out.println("Total number of patients: " + patients.size());
+            System.out.println("\nPreview of the first " + numEntriesToShow + " entries:");
+
             int count = 0;
             for (Patient patient : patients) {
-                if (count++ >= 10) break;
+                if (count++ >= numEntriesToShow) break;
                 System.out.println("-------------------------------------");
                 System.out.println("Patient #" + count + ":");
-                System.out.println("Genre: " + patient.getGender());
-                System.out.println("Âge: " + patient.getAge());
-                System.out.println("Taille: " + patient.getHeight() + " m");
-                System.out.println("Poids: " + patient.getWeight() + " kg");
-                System.out.println("IMC calculé: " + patient.calculateBMI());
-                System.out.println("Historique familial d'obésité: " + (patient.isFamilyHistoryWithOverweight() ? "Oui" : "Non"));
-                System.out.println("Mode de transport: " + patient.getMtrans());
-                System.out.println("Catégorie de poids: " + patient.getNObeyesdad());
+                System.out.println(patient); // Uses toString() method
             }
             
         } catch (Exception e) {
-            System.err.println("Erreur lors du chargement des données: " + e.getMessage());
+            System.err.println("Error while loading the dataset: " + e.getMessage());
             e.printStackTrace();
         }
     }

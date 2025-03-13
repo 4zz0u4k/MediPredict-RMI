@@ -7,42 +7,46 @@ import java.util.List;
 public class DatasetLoader {
     
     /**
-     * Charge les données d'entraînement à partir d'un fichier CSV
+     * Load patient data from a CSV file.
      * 
-     * @param filePath 
-     * @return Liste d'objets Patient
+     * @param filePath The path to the CSV file
+     * @return List of Patient objects
      */
     public static List<Patient> loadTrainingData(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("Le chemin du fichier ne peut pas être vide");
+            throw new IllegalArgumentException("File path cannot be empty.");
         }
         
         if (!filePath.toLowerCase().endsWith(".csv")) {
-            throw new IllegalArgumentException("Le fichier doit être au format CSV.");
+            throw new IllegalArgumentException("The file must be in CSV format.");
         }
         
         List<Patient> patients = new ArrayList<>();
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Lecture de la ligne d'en-tête (pour vérifier le format)
-            String headerLine = br.readLine();
             
+            // Read header line
+            String headerLine = br.readLine();
             if (headerLine == null) {
-                throw new IOException("Le fichier est vide");
+                throw new IOException("The file is empty.");
             }
             
-            // Vérification des colonnes attendues
+            // Expected CSV headers
             String[] expectedHeaders = {
-                "Gender", "Age", "Height", "Weight", "family_history_with_overweight", 
-                "FAVC", "FCVC", "NCP", "CAEC", "SMOKE", "CH2O", "SCC", "FAF", 
-                "TUE", "CALC", "MTRANS", "NObeyesdad"
+                "Is_Male", "Age", "Height", "Weight", "Familial_Overweight_History",
+                "High_Caloric_Food", "Vegetables_In_Meals", "Daily_Main_Meals", "Smoking",
+                "Water_Consumption", "Calories_Monitoring", "Physical_Activity", "Screen_Time", "BMI",
+                "Eat_Between_Meals_Always", "Eat_Between_Meals_Frequently", "Eat_Between_Meals_No", "Eat_Between_Meals_Sometimes",
+                "Alcohol_Consumption_Always", "Alcohol_Consumption_Frequently", "Alcohol_Consumption_No", "Alcohol_Consumption_Sometimes",
+                "Transportation_Automobile", "Transportation_Bike", "Transportation_Motorbike", "Transportation_Public_Transportation",
+                "Transportation_Walking", "Obesity_Level"
             };
             
             String[] actualHeaders = headerLine.split(",");
             validateHeaders(expectedHeaders, actualHeaders);
             
-            // Lecture des données
+            // Read data lines
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 
@@ -50,14 +54,14 @@ public class DatasetLoader {
                     Patient patient = createPatientFromValues(values);
                     patients.add(patient);
                 } else {
-                    System.err.println("Ligne ignorée car nombre de valeurs incorrect: " + line);
+                    System.err.println("Skipping invalid line due to incorrect number of values: " + line);
                 }
             }
             
-            System.out.println("Chargement de données terminé. " + patients.size() + " patients chargés.");
+            System.out.println("Data loading complete. " + patients.size() + " patients loaded.");
             
         } catch (IOException e) {
-            throw new RuntimeException("Erreur lors de la lecture du fichier CSV: " + e.getMessage(), e);
+            throw new RuntimeException("Error reading CSV file: " + e.getMessage(), e);
         }
         
         return patients;
@@ -66,51 +70,61 @@ public class DatasetLoader {
 
     private static void validateHeaders(String[] expectedHeaders, String[] actualHeaders) {
         if (actualHeaders.length != expectedHeaders.length) {
-            throw new IllegalArgumentException("Le nombre de colonnes dans le fichier ne correspond pas au format attendu");
+            throw new IllegalArgumentException("The number of columns in the file does not match the expected format.");
         }
         
         for (int i = 0; i < expectedHeaders.length; i++) {
-            if (!actualHeaders[i].trim().equals(expectedHeaders[i])) {
-                throw new IllegalArgumentException("La colonne " + (i+1) + " devrait être '" + 
-                    expectedHeaders[i] + "' mais est '" + actualHeaders[i].trim() + "'");
+            if (!actualHeaders[i].trim().equalsIgnoreCase(expectedHeaders[i])) {
+                throw new IllegalArgumentException("Column " + (i+1) + " should be '" + 
+                    expectedHeaders[i] + "' but found '" + actualHeaders[i].trim() + "'");
             }
         }
     }
     
     /**
-     * @param values Les valeurs d'une ligne
-     * @return Un objet Patient
+     * Convert a CSV row into a Patient object.
+     * 
+     * @param values The values from a row in the CSV
+     * @return A Patient object
      */
     private static Patient createPatientFromValues(String[] values) {
-        Patient patient = new Patient();
-        
         try {
-
-            patient.setGender(values[0].trim());
-            patient.setAge(Double.parseDouble(values[1].trim()));
-            patient.setHeight(Double.parseDouble(values[2].trim()));
-            patient.setWeight(Double.parseDouble(values[3].trim()));
-            patient.setFamilyHistoryWithOverweight(values[4].trim().equalsIgnoreCase("yes"));
-            patient.setFavc(values[5].trim().equalsIgnoreCase("yes"));
-            patient.setFcvc(Double.parseDouble(values[6].trim()));
-            patient.setNcp(Double.parseDouble(values[7].trim()));
-            patient.setCaec(values[8].trim());
-            patient.setSmoke(values[9].trim().equalsIgnoreCase("yes"));
-            patient.setCh2o(Double.parseDouble(values[10].trim()));
-            patient.setScc(values[11].trim().equalsIgnoreCase("yes"));
-            patient.setFaf(Double.parseDouble(values[12].trim()));
-            patient.setTue(Double.parseDouble(values[13].trim()));
-            patient.setCalc(values[14].trim());
-            patient.setMtrans(values[15].trim());
-            patient.setNObeyesdad(values[16].trim());
+            return new Patient(
+                Integer.parseInt(values[0].trim()),   // isMale
+                Double.parseDouble(values[1].trim()), // age
+                Double.parseDouble(values[2].trim()), // height
+                Double.parseDouble(values[3].trim()), // weight
+                Integer.parseInt(values[4].trim()),   // familialOverweightHistory
+                Integer.parseInt(values[5].trim()),   // highCaloricFood
+                Double.parseDouble(values[6].trim()), // vegetablesInMeals
+                Double.parseDouble(values[7].trim()), // dailyMainMeals
+                Integer.parseInt(values[8].trim()),   // smoking
+                Double.parseDouble(values[9].trim()), // waterConsumption
+                Integer.parseInt(values[10].trim()),  // caloriesMonitoring
+                Double.parseDouble(values[11].trim()),// physicalActivity
+                Double.parseDouble(values[12].trim()),// screenTime
+                Double.parseDouble(values[13].trim()),// bmi
+                Integer.parseInt(values[14].trim()),  // eatBetweenMealsAlways
+                Integer.parseInt(values[15].trim()),  // eatBetweenMealsFrequently
+                Integer.parseInt(values[16].trim()),  // eatBetweenMealsNo
+                Integer.parseInt(values[17].trim()),  // eatBetweenMealsSometimes
+                Integer.parseInt(values[18].trim()),  // alcoholConsumptionAlways
+                Integer.parseInt(values[19].trim()),  // alcoholConsumptionFrequently
+                Integer.parseInt(values[20].trim()),  // alcoholConsumptionNo
+                Integer.parseInt(values[21].trim()),  // alcoholConsumptionSometimes
+                Integer.parseInt(values[22].trim()),  // transportationAutomobile
+                Integer.parseInt(values[23].trim()),  // transportationBike
+                Integer.parseInt(values[24].trim()),  // transportationMotorbike
+                Integer.parseInt(values[25].trim()),  // transportationPublicTransportation
+                Integer.parseInt(values[26].trim()),  // transportationWalking
+                Integer.parseInt(values[27].trim())   // obesityLevel
+            );
         } catch (NumberFormatException e) {
-            System.err.println("Erreur lors de la conversion d'une valeur numérique: " + e.getMessage());
+            System.err.println("Error converting numeric value: " + e.getMessage());
             throw e;
         } catch (IndexOutOfBoundsException e) {
-            System.err.println("Erreur: la ligne ne contient pas assez de valeurs");
+            System.err.println("Error: The line does not contain enough values.");
             throw e;
         }
-        
-        return patient;
     }
 }
