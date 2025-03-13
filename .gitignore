@@ -30,3 +30,6 @@ bin/
 
 # Fichiers compilés Java
 *.class
+
+# Notebook de Jupyter
+playground/catboost_info

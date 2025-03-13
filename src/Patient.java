@@ -3,231 +3,223 @@ import java.io.Serializable;
 public class Patient implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private String gender;
+    private int isMale;
     private double age;
     private double height;
     private double weight;
-    private boolean familyHistoryWithOverweight;
-    private boolean favc;  // Frequent consumption of high caloric food
-    private double fcvc;   // Frequency of consumption of vegetables
-    private double ncp;    // Number of main meals
-    private String caec;   // Consumption of food between meals (Sometimes, Frequently, etc.)
-    private boolean smoke;
-    private double ch2o;   // Consumption of water daily
-    private boolean scc;   // Calories consumption monitoring
-    private double faf;    // Physical activity frequency
-    private double tue;    // Time using technology devices
-    private String calc;   // Consumption of alcohol (no, Sometimes, etc.)
-    private String mtrans; // Transportation used (Public_Transportation, etc.)
-    private String nObeyesdad; // Obesity level (Normal_Weight, Overweight, etc.)
-
+    private int familialOverweightHistory;
+    private int highCaloricFood;
+    private double vegetablesInMeals;
+    private double dailyMainMeals;
+    private int smoking;
+    private double waterConsumption;
+    private int caloriesMonitoring;
+    private double physicalActivity;
+    private double screenTime;
+    private double bmi;
+    private int eatBetweenMealsAlways;
+    private int eatBetweenMealsFrequently;
+    private int eatBetweenMealsNo;
+    private int eatBetweenMealsSometimes;
+    private int alcoholConsumptionAlways;
+    private int alcoholConsumptionFrequently;
+    private int alcoholConsumptionNo;
+    private int alcoholConsumptionSometimes;
+    private int transportationAutomobile;
+    private int transportationBike;
+    private int transportationMotorbike;
+    private int transportationPublicTransportation;
+    private int transportationWalking;
+    private int obesityLevel;
+    
     public Patient() {
     }
 
-    public Patient(String gender, double age, double height, double weight, boolean familyHistoryWithOverweight,
-                   boolean favc, double fcvc, double ncp, String caec, boolean smoke, double ch2o, boolean scc,
-                   double faf, double tue, String calc, String mtrans, String nObeyesdad) {
-        this.gender = gender;
+    public Patient(int isMale, double age, double height, double weight, int familialOverweightHistory,
+                   int highCaloricFood, double vegetablesInMeals, double dailyMainMeals, int smoking,
+                   double waterConsumption, int caloriesMonitoring, double physicalActivity, double screenTime, double bmi,
+                   int eatBetweenMealsAlways, int eatBetweenMealsFrequently, int eatBetweenMealsNo, int eatBetweenMealsSometimes,
+                   int alcoholConsumptionAlways, int alcoholConsumptionFrequently, int alcoholConsumptionNo, int alcoholConsumptionSometimes,
+                   int transportationAutomobile, int transportationBike, int transportationMotorbike, int transportationPublicTransportation,
+                   int transportationWalking, int obesityLevel) {
+        this.isMale = isMale;
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.familyHistoryWithOverweight = familyHistoryWithOverweight;
-        this.favc = favc;
-        this.fcvc = fcvc;
-        this.ncp = ncp;
-        this.caec = caec;
-        this.smoke = smoke;
-        this.ch2o = ch2o;
-        this.scc = scc;
-        this.faf = faf;
-        this.tue = tue;
-        this.calc = calc;
-        this.mtrans = mtrans;
-        this.nObeyesdad = nObeyesdad;
+        this.familialOverweightHistory = familialOverweightHistory;
+        this.highCaloricFood = highCaloricFood;
+        this.vegetablesInMeals = vegetablesInMeals;
+        this.dailyMainMeals = dailyMainMeals;
+        this.smoking = smoking;
+        this.waterConsumption = waterConsumption;
+        this.caloriesMonitoring = caloriesMonitoring;
+        this.physicalActivity = physicalActivity;
+        this.screenTime = screenTime;
+        this.bmi = bmi;
+        this.eatBetweenMealsAlways = eatBetweenMealsAlways;
+        this.eatBetweenMealsFrequently = eatBetweenMealsFrequently;
+        this.eatBetweenMealsNo = eatBetweenMealsNo;
+        this.eatBetweenMealsSometimes = eatBetweenMealsSometimes;
+        this.alcoholConsumptionAlways = alcoholConsumptionAlways;
+        this.alcoholConsumptionFrequently = alcoholConsumptionFrequently;
+        this.alcoholConsumptionNo = alcoholConsumptionNo;
+        this.alcoholConsumptionSometimes = alcoholConsumptionSometimes;
+        this.transportationAutomobile = transportationAutomobile;
+        this.transportationBike = transportationBike;
+        this.transportationMotorbike = transportationMotorbike;
+        this.transportationPublicTransportation = transportationPublicTransportation;
+        this.transportationWalking = transportationWalking;
+        this.obesityLevel = obesityLevel;
     }
 
-    public Patient(Patient patient) {
-        this.gender = patient.gender;
-        this.age = patient.age;
-        this.height = patient.height;
-        this.weight = patient.weight;
-        this.familyHistoryWithOverweight = patient.familyHistoryWithOverweight;
-        this.favc = patient.favc;
-        this.fcvc = patient.fcvc;
-        this.ncp = patient.ncp;
-        this.caec = patient.caec;
-        this.smoke = patient.smoke;
-        this.ch2o = patient.ch2o;
-        this.scc = patient.scc;
-        this.faf = patient.faf;
-        this.tue = patient.tue;
-        this.calc = patient.calc;
-        this.mtrans = patient.mtrans;
-    }
+    // Getters and Setters
+    public int getIsMale() { return isMale; }
+    public void setIsMale(int isMale) { this.isMale = isMale; }
 
-    // Getters et Setters
-    public String getGender() {
-        return gender;
-    }
+    public double getAge() { return age; }
+    public void setAge(double age) { this.age = age; }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    public double getHeight() { return height; }
+    public void setHeight(double height) { this.height = height; }
 
-    public double getAge() {
-        return age;
-    }
+    public double getWeight() { return weight; }
+    public void setWeight(double weight) { this.weight = weight; }
 
-    public void setAge(double age) {
-        this.age = age;
-    }
+    public int getFamilialOverweightHistory() { return familialOverweightHistory; }
+    public void setFamilialOverweightHistory(int familialOverweightHistory) { this.familialOverweightHistory = familialOverweightHistory; }
 
-    public double getHeight() {
-        return height;
-    }
+    public int getHighCaloricFood() { return highCaloricFood; }
+    public void setHighCaloricFood(int highCaloricFood) { this.highCaloricFood = highCaloricFood; }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
+    public double getVegetablesInMeals() { return vegetablesInMeals; }
+    public void setVegetablesInMeals(double vegetablesInMeals) { this.vegetablesInMeals = vegetablesInMeals; }
 
-    public double getWeight() {
-        return weight;
-    }
+    public double getDailyMainMeals() { return dailyMainMeals; }
+    public void setDailyMainMeals(double dailyMainMeals) { this.dailyMainMeals = dailyMainMeals; }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
+    public int getSmoking() { return smoking; }
+    public void setSmoking(int smoking) { this.smoking = smoking; }
 
-    public boolean isFamilyHistoryWithOverweight() {
-        return familyHistoryWithOverweight;
-    }
+    public double getWaterConsumption() { return waterConsumption; }
+    public void setWaterConsumption(double waterConsumption) { this.waterConsumption = waterConsumption; }
 
-    public void setFamilyHistoryWithOverweight(boolean familyHistoryWithOverweight) {
-        this.familyHistoryWithOverweight = familyHistoryWithOverweight;
-    }
+    public int getCaloriesMonitoring() { return caloriesMonitoring; }
+    public void setCaloriesMonitoring(int caloriesMonitoring) { this.caloriesMonitoring = caloriesMonitoring; }
 
-    public boolean isFavc() {
-        return favc;
-    }
+    public double getPhysicalActivity() { return physicalActivity; }
+    public void setPhysicalActivity(double physicalActivity) { this.physicalActivity = physicalActivity; }
 
-    public void setFavc(boolean favc) {
-        this.favc = favc;
-    }
+    public double getScreenTime() { return screenTime; }
+    public void setScreenTime(double screenTime) { this.screenTime = screenTime; }
 
-    public double getFcvc() {
-        return fcvc;
-    }
+    public double getBmi() { return bmi; }
+    public void setBmi(double bmi) { this.bmi = bmi; }
 
-    public void setFcvc(double fcvc) {
-        this.fcvc = fcvc;
-    }
+    public int getEatBetweenMealsAlways() { return eatBetweenMealsAlways; }
+    public void setEatBetweenMealsAlways(int eatBetweenMealsAlways) { this.eatBetweenMealsAlways = eatBetweenMealsAlways; }
 
-    public double getNcp() {
-        return ncp;
-    }
+    public int getEatBetweenMealsFrequently() { return eatBetweenMealsFrequently; }
+    public void setEatBetweenMealsFrequently(int eatBetweenMealsFrequently) { this.eatBetweenMealsFrequently = eatBetweenMealsFrequently; }
 
-    public void setNcp(double ncp) {
-        this.ncp = ncp;
-    }
+    public int getEatBetweenMealsNo() { return eatBetweenMealsNo; }
+    public void setEatBetweenMealsNo(int eatBetweenMealsNo) { this.eatBetweenMealsNo = eatBetweenMealsNo; }
 
-    public String getCaec() {
-        return caec;
-    }
+    public int getEatBetweenMealsSometimes() { return eatBetweenMealsSometimes; }
+    public void setEatBetweenMealsSometimes(int eatBetweenMealsSometimes) { this.eatBetweenMealsSometimes = eatBetweenMealsSometimes; }
 
-    public void setCaec(String caec) {
-        this.caec = caec;
-    }
+    public int getAlcoholConsumptionAlways() { return alcoholConsumptionAlways; }
+    public void setAlcoholConsumptionAlways(int alcoholConsumptionAlways) { this.alcoholConsumptionAlways = alcoholConsumptionAlways; }
 
-    public boolean isSmoke() {
-        return smoke;
-    }
+    public int getAlcoholConsumptionFrequently() { return alcoholConsumptionFrequently; }
+    public void setAlcoholConsumptionFrequently(int alcoholConsumptionFrequently) { this.alcoholConsumptionFrequently = alcoholConsumptionFrequently; }
 
-    public void setSmoke(boolean smoke) {
-        this.smoke = smoke;
-    }
+    public int getAlcoholConsumptionNo() { return alcoholConsumptionNo; }
+    public void setAlcoholConsumptionNo(int alcoholConsumptionNo) { this.alcoholConsumptionNo = alcoholConsumptionNo; }
 
-    public double getCh2o() {
-        return ch2o;
-    }
+    public int getAlcoholConsumptionSometimes() { return alcoholConsumptionSometimes; }
+    public void setAlcoholConsumptionSometimes(int alcoholConsumptionSometimes) { this.alcoholConsumptionSometimes = alcoholConsumptionSometimes; }
 
-    public void setCh2o(double ch2o) {
-        this.ch2o = ch2o;
-    }
+    public int getTransportationAutomobile() { return transportationAutomobile; }
+    public void setTransportationAutomobile(int transportationAutomobile) { this.transportationAutomobile = transportationAutomobile; }
 
-    public boolean isScc() {
-        return scc;
-    }
+    public int getTransportationBike() { return transportationBike; }
+    public void setTransportationBike(int transportationBike) { this.transportationBike = transportationBike; }
 
-    public void setScc(boolean scc) {
-        this.scc = scc;
-    }
+    public int getTransportationMotorbike() { return transportationMotorbike; }
+    public void setTransportationMotorbike(int transportationMotorbike) { this.transportationMotorbike = transportationMotorbike; }
 
-    public double getFaf() {
-        return faf;
-    }
+    public int getTransportationPublicTransportation() { return transportationPublicTransportation; }
+    public void setTransportationPublicTransportation(int transportationPublicTransportation) { this.transportationPublicTransportation = transportationPublicTransportation; }
 
-    public void setFaf(double faf) {
-        this.faf = faf;
-    }
+    public int getTransportationWalking() { return transportationWalking; }
+    public void setTransportationWalking(int transportationWalking) { this.transportationWalking = transportationWalking; }
 
-    public double getTue() {
-        return tue;
-    }
-
-    public void setTue(double tue) {
-        this.tue = tue;
-    }
-
-    public String getCalc() {
-        return calc;
-    }
-
-    public void setCalc(String calc) {
-        this.calc = calc;
-    }
-
-    public String getMtrans() {
-        return mtrans;
-    }
-
-    public void setMtrans(String mtrans) {
-        this.mtrans = mtrans;
-    }
-
-    public String getNObeyesdad() {
-        return nObeyesdad;
-    }
-
-    public void setNObeyesdad(String nObeyesdad) {
-        this.nObeyesdad = nObeyesdad;
-    }
-
-    // Calcul de l'IMC (Indice de Masse Corporelle)
-    public double calculateBMI() {
-        if (height <= 0) return 0;
-        return weight / (height * height);
-    }
+    public int getObesityLevel() { return obesityLevel; }
+    public void setObesityLevel(int obesityLevel) { this.obesityLevel = obesityLevel; }
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "gender='" + gender + '\'' +
-                ", age=" + age +
-                ", height=" + height +
-                ", weight=" + weight +
-                ", familyHistoryWithOverweight=" + familyHistoryWithOverweight +
-                ", favc=" + favc +
-                ", fcvc=" + fcvc +
-                ", ncp=" + ncp +
-                ", caec='" + caec + '\'' +
-                ", smoke=" + smoke +
-                ", ch2o=" + ch2o +
-                ", scc=" + scc +
-                ", faf=" + faf +
-                ", tue=" + tue +
-                ", calc='" + calc + '\'' +
-                ", mtrans='" + mtrans + '\'' +
-                ", nObeyesdad='" + nObeyesdad + '\'' +
-                '}';
+        return "Patient(" +
+                "Gender=" + (isMale == 1 ? "Male" : "Female") +
+                ", Age=" + age +
+                ", Height=" + height + " m" +
+                ", Weight=" + weight + " kg" +
+                ", BMI=" + bmi +
+                ", Familial Overweight History=" + (familialOverweightHistory == 1 ? "Yes" : "No") +
+                ", High Caloric Food Consumption=" + (highCaloricFood == 1 ? "Yes" : "No") +
+                ", Vegetables in Meals=" + vegetablesInMeals +
+                ", Daily Main Meals=" + dailyMainMeals +
+                ", Smoking=" + (smoking == 1 ? "Yes" : "No") +
+                ", Water Consumption=" + waterConsumption + " L/day" +
+                ", Calories Monitoring=" + (caloriesMonitoring == 1 ? "Yes" : "No") +
+                ", Physical Activity=" + physicalActivity + " hours/week" +
+                ", Screen Time=" + screenTime + " hours/day" +
+                ", Eating Between Meals=" + getEatBetweenMealsCategory() +
+                ", Alcohol Consumption=" + getAlcoholConsumptionCategory() +
+                ", Mode of Transportation=" + getTransportationMode() +
+                ", Obesity Level=" + getObesityCategory() +
+                ')';
     }
-}
+    
+    // Interpret one-hot encoded eating between meals data
+    private String getEatBetweenMealsCategory() {
+        if (eatBetweenMealsAlways == 1) return "Always";
+        if (eatBetweenMealsFrequently == 1) return "Frequently";
+        if (eatBetweenMealsNo == 1) return "Never";
+        if (eatBetweenMealsSometimes == 1) return "Sometimes";
+        return "Unknown";
+    }
+    
+    // Interpret one-hot encoded alcohol consumption data
+    private String getAlcoholConsumptionCategory() {
+        if (alcoholConsumptionAlways == 1) return "Always";
+        if (alcoholConsumptionFrequently == 1) return "Frequently";
+        if (alcoholConsumptionNo == 1) return "Never";
+        if (alcoholConsumptionSometimes == 1) return "Sometimes";
+        return "Unknown";
+    }
+    
+    // Interpret one-hot encoded transportation data
+    private String getTransportationMode() {
+        if (transportationAutomobile == 1) return "Automobile";
+        if (transportationBike == 1) return "Bicycle";
+        if (transportationMotorbike == 1) return "Motorbike";
+        if (transportationPublicTransportation == 1) return "Public Transport";
+        if (transportationWalking == 1) return "Walking";
+        return "Unknown";
+    }
+    
+    // Interpret obesity level
+    private String getObesityCategory() {
+        switch (obesityLevel) {
+            case 0: return "Insufficient Weight";
+            case 1: return "Normal Weight";
+            case 2: return "Overweight Level I";
+            case 3: return "Overweight Level II";
+            case 4: return "Obesity Type I";
+            case 5: return "Obesity Type II";
+            case 6: return "Obesity Type III";
+            default: return "Unknown";
+        }
+    }
+}   
