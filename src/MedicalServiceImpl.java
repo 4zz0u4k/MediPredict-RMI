@@ -16,6 +16,15 @@ public class MedicalServiceImpl extends UnicastRemoteObject implements MedicalSe
 
     protected MedicalServiceImpl() throws RemoteException {
         super();
+        try {
+            Model modelStorage = Model.loadLatestModel();
+            this.model = modelStorage.getModel();
+            this.datasetStructure = modelStorage.getDatasetStructure();
+            this.modelTrained = true;
+            System.out.println("Pre-trained model loaded successfully: " + modelStorage);
+        } catch (Exception e) {
+            System.out.println("No pre-trained model found. Training will be required.");
+        }
     }
 
     @Override
@@ -71,7 +80,12 @@ public class MedicalServiceImpl extends UnicastRemoteObject implements MedicalSe
             model.buildClassifier(dataset);
 
             modelTrained = true;
-            System.out.println("Model training complete!");
+
+            // Save model with dynamic versioning
+            Model modelStorage = new Model(model, datasetStructure, "");  // Version is set dynamically
+            Model.saveModel(modelStorage);
+
+            System.out.println("Model training complete and saved!");
         } catch (Exception e) {
             System.err.println("Error training model: " + e.getMessage());
             e.printStackTrace();
