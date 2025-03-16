@@ -168,8 +168,7 @@ public class MedicalServiceImpl extends UnicastRemoteObject implements MedicalSe
             DenseInstance instance = createInstance(patient);
             instance.setDataset(datasetStructure); // Set structure for prediction
             double predictionIndex = model.classifyInstance(instance);
-            String predictedLabel = datasetStructure.classAttribute().value((int) predictionIndex);
-            return "Predicted Obesity Level: " + predictedLabel;
+            return datasetStructure.classAttribute().value((int) predictionIndex);
         } catch (Exception e) {
             return "Error in prediction: " + e.getMessage();
         }

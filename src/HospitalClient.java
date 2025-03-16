@@ -48,9 +48,10 @@ public class HospitalClient {
                         int totalPredictions = testPatients.size();
 
                         for (Patient testPatient : testPatients) {
-                            String predictedValue = service.predictObesity(testPatient);
+                            String predictedValue = service.predictObesity(testPatient).replace('_',' ');
                             String realValue = testPatient.getObesityCategory();
-
+                            System.out.println("Real value: " + realValue);
+                            System.out.println("Prediction: " + predictedValue);
                             if (predictedValue.equals(realValue)) {
                                 correctPredictions++;
                             }
@@ -60,6 +61,7 @@ public class HospitalClient {
                         System.out.println("Total Predictions: " + totalPredictions);
                         System.out.println("Correct Predictions: " + correctPredictions);
                         System.out.println("Accuracy: " + accuracy + "%");
+                        break;
 
                     case 3:
                         System.out.println("Exiting... Thank you!");
