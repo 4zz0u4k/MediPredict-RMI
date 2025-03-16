@@ -7,7 +7,6 @@ public class HospitalClient {
     public static void main(String[] args) {
         String datasetsPath = "Data/Datasets/";
 
-
         try {
             // Connect to RMI registry
             Registry registry = LocateRegistry.getRegistry("localhost", 7777);
@@ -49,9 +48,8 @@ public class HospitalClient {
                         int totalPredictions = testPatients.size();
 
                         for (Patient testPatient : testPatients) {
-                            Patient patient = new Patient(testPatient);
-                            String predictedValue = service.predictObesity(patient);
-                            String realValue = testPatient.getNObeyesdad();
+                            String predictedValue = service.predictObesity(testPatient);
+                            String realValue = testPatient.getObesityCategory();
 
                             if (predictedValue.equals(realValue)) {
                                 correctPredictions++;

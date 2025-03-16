@@ -210,7 +210,7 @@ public class Patient implements Serializable {
     }
     
     // Interpret obesity level
-    private String getObesityCategory() {
+    public String getObesityCategory() {
         switch (obesityLevel) {
             case 0: return "Insufficient Weight";
             case 1: return "Normal Weight";
