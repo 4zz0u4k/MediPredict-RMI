@@ -18,14 +18,143 @@ public class MedicalServiceImpl extends UnicastRemoteObject implements MedicalSe
         super();
     }
 
+    // Add this field to track when we last trained the model
+    private int lastTrainingSize = 0;
+
     @Override
     public void sendPatientData(List<Patient> patients) throws RemoteException {
-        System.out.println("Received " + patients.size() + " new patient records.");
-        trainingData.addAll(patients);
+        if (patients == null || patients.isEmpty()) {
+            return;
+        }
 
-        // Check if we have enough data to train the model
-        if (trainingData.size() >= 1000 && !modelTrained) {
+        System.out.println("Received " + patients.size() + " new patient records.");
+
+        // Add the new data to our training set
+        trainingData.addAll(patients);
+        int totalRecords = trainingData.size();
+
+        System.out.println("Current dataset size: " + totalRecords + " records");
+
+        // Model training logic
+        if (!modelTrained && totalRecords >= 1000) {
+            // First-time training when we reach threshold
+            System.out.println("Training initial model with " + totalRecords + " records...");
             trainModel();
+            lastTrainingSize = totalRecords;
+            modelTrained = true;
+        } else if (modelTrained && newDataRequiresRetraining(totalRecords)) {
+            // Retrain model when we have 1000+ new records
+            System.out.println("Retraining model with updated dataset...");
+            trainModel();
+            lastTrainingSize = totalRecords;
+        }
+
+        // Display comprehensive statistics about the dataset
+        printDatasetStatistics();
+
+        if (modelTrained) {
+            System.out.println("Model is trained and ready for predictions.");
+        } else {
+            System.out.println("Need " + (1000 - totalRecords) + " more records to train initial model.");
+        }
+    }
+
+    // Helper method to decide if retraining is needed
+    private boolean newDataRequiresRetraining(int currentSize) {
+        // Retrain if we have 1000+ new records since last training
+        return currentSize >= lastTrainingSize + 1000;
+    }
+
+    // Method to print comprehensive dataset statistics
+    private void printDatasetStatistics() {
+        if (trainingData.isEmpty()) return;
+
+        int totalRecords = trainingData.size();
+
+        // Obesity level distribution
+        int[] obesityLevelCounts = new int[7]; // 0-6 levels
+        for (Patient p : trainingData) {
+            int level = p.getObesityLevel();
+            if (level >= 0 && level < 7) {
+                obesityLevelCounts[level]++;
+            }
+        }
+
+        System.out.println("\nDataset Obesity Category Distribution:");
+        for (int i = 0; i < obesityLevelCounts.length; i++) {
+            String category = "";
+            switch (i) {
+                case 0: category = "Insufficient Weight"; break;
+                case 1: category = "Normal Weight"; break;
+                case 2: category = "Overweight Level I"; break;
+                case 3: category = "Overweight Level II"; break;
+                case 4: category = "Obesity Type I"; break;
+                case 5: category = "Obesity Type II"; break;
+                case 6: category = "Obesity Type III"; break;
+            }
+
+            double percent = (obesityLevelCounts[i] * 100.0) / totalRecords;
+            System.out.printf("- %s: %d (%.1f%%)\n", category, obesityLevelCounts[i], percent);
+        }
+
+        // Gender distribution
+        int maleCount = 0, femaleCount = 0;
+        for (Patient p : trainingData) {
+            if (p.getIsMale() == 1) maleCount++;
+            else femaleCount++;
+        }
+
+        System.out.println("\nGender Distribution:");
+        System.out.printf("- Male: %d (%.1f%%)\n", maleCount, (maleCount * 100.0) / totalRecords);
+        System.out.printf("- Female: %d (%.1f%%)\n", femaleCount, (femaleCount * 100.0) / totalRecords);
+
+        // Lifestyle factors
+        int smokers = 0, caloriesMonitoring = 0, familialHistory = 0;
+        double totalPhysicalActivity = 0, totalScreenTime = 0, totalWaterConsumption = 0;
+
+        for (Patient p : trainingData) {
+            if (p.getSmoking() == 1) smokers++;
+            if (p.getCaloriesMonitoring() == 1) caloriesMonitoring++;
+            if (p.getFamilialOverweightHistory() == 1) familialHistory++;
+
+            totalPhysicalActivity += p.getPhysicalActivity();
+            totalScreenTime += p.getScreenTime();
+            totalWaterConsumption += p.getWaterConsumption();
+        }
+
+        System.out.println("\nLifestyle Factors:");
+        System.out.printf("- Smokers: %d (%.1f%%)\n", smokers, (smokers * 100.0) / totalRecords);
+        System.out.printf("- Monitoring Calories: %d (%.1f%%)\n", caloriesMonitoring, (caloriesMonitoring * 100.0) / totalRecords);
+        System.out.printf("- Familial Overweight History: %d (%.1f%%)\n", familialHistory, (familialHistory * 100.0) / totalRecords);
+        System.out.printf("- Average Physical Activity: %.1f hours/week\n", totalPhysicalActivity / totalRecords);
+        System.out.printf("- Average Screen Time: %.1f hours/day\n", totalScreenTime / totalRecords);
+        System.out.printf("- Average Water Consumption: %.1f L/day\n", totalWaterConsumption / totalRecords);
+
+        // Transportation mode distribution
+        int automobile = 0, bike = 0, motorbike = 0, publicTransport = 0, walking = 0;
+        for (Patient p : trainingData) {
+            if (p.getTransportationAutomobile() == 1) automobile++;
+            if (p.getTransportationBike() == 1) bike++;
+            if (p.getTransportationMotorbike() == 1) motorbike++;
+            if (p.getTransportationPublicTransportation() == 1) publicTransport++;
+            if (p.getTransportationWalking() == 1) walking++;
+        }
+
+        System.out.println("\nTransportation Modes:");
+        System.out.printf("- Automobile: %d (%.1f%%)\n", automobile, (automobile * 100.0) / totalRecords);
+        System.out.printf("- Bicycle: %d (%.1f%%)\n", bike, (bike * 100.0) / totalRecords);
+        System.out.printf("- Motorbike: %d (%.1f%%)\n", motorbike, (motorbike * 100.0) / totalRecords);
+        System.out.printf("- Public Transport: %d (%.1f%%)\n", publicTransport, (publicTransport * 100.0) / totalRecords);
+        System.out.printf("- Walking: %d (%.1f%%)\n", walking, (walking * 100.0) / totalRecords);
+
+        System.out.println("\nModel Training Status:");
+        if (modelTrained) {
+            System.out.println("- Model trained with " + lastTrainingSize + " records");
+            System.out.println("- Records added since last training: " + (totalRecords - lastTrainingSize));
+            System.out.println("- Records needed for next retraining: " + (1000 - (totalRecords - lastTrainingSize)));
+        } else {
+            System.out.println("- Initial model not yet trained");
+            System.out.println("- Records needed for initial training: " + (1000 - totalRecords));
         }
     }
 

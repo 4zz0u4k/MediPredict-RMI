@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class HospitalClient {
     public static void main(String[] args) {
-        String datasetsPath = "Data/Datasets/";
-
+        String trainDatasetsPath = "data/split/train/";
+        String testDatasetsPath = "data/split/test/";
         try {
             // Connect to RMI registry
             Registry registry = LocateRegistry.getRegistry("localhost", 7777);
@@ -35,14 +35,14 @@ public class HospitalClient {
                 switch (choice) {
                     case 1:
 
-                        String hospitalAnnotatedDataset = datasetsPath + "hospital_" + hospital_id + "_test_dataset_.csv";
+                        String hospitalAnnotatedDataset = trainDatasetsPath + "hospital_" + hospital_id + ".csv";
                         List<Patient> patients = DatasetLoader.loadTrainingData(hospitalAnnotatedDataset);
                         service.sendPatientData(patients);
                         System.out.println("✅ Sent " + patients.size() + " patient records to Medical Center.");
                         break;
 
                     case 2:
-                        String hospitalTestDataset = datasetsPath + "hospital_" + hospital_id + "_test_dataset_.csv";
+                        String hospitalTestDataset = testDatasetsPath + "hospital_" + hospital_id + ".csv";
                         List<Patient> testPatients = DatasetLoader.loadTrainingData(hospitalTestDataset);
                         int correctPredictions = 0;
                         int totalPredictions = testPatients.size();
