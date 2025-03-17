@@ -3,7 +3,7 @@ import java.util.List;
 public class TestDatasetLoader {
     public static void main(String[] args) {
         try {
-            String filePath = "../data/processed/dataset.csv";
+            String filePath = "data/processed/dataset.csv";
             int numEntriesToShow = 3; // Change this to show more or fewer entries
 
             List<Patient> patients = DatasetLoader.loadTrainingData(filePath);
